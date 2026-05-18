@@ -1,32 +1,53 @@
-// Função para aplicar formatação de texto (Negrito, Itálico, Alinhamento, etc)
+// Formatações Simples (Negrito, Itálico, etc.)
 function formatText(command) {
     document.execCommand(command, false, null);
-    // Devolve o foco ao editor para continuarmos a escrever
-    document.getElementById('editor').focus();
 }
 
-// Função para exportar/guardar o documento
-function saveFile() {
-    const editor = document.getElementById('editor');
-    const content = editor.innerHTML;
+// Formatações com parâmetros (Cores, Tamanhos)
+function formatParamText(command, value) {
+    document.execCommand(command, false, value);
+}
+
+// Função para adicionar uma nova página limpa ao editor
+function addNewPage() {
+    const pagesWrapper = document.getElementById('pagesWrapper');
     
-    // Cria um objeto de ficheiro (Blob) com o conteúdo HTML
+    // Cria o elemento da nova folha
+    const newPage = document.createElement('div');
+    newPage.className = 'page';
+    newPage.setAttribute('contenteditable', 'true');
+    newPage.setAttribute('spellcheck', 'false');
+    
+    // Adiciona um parágrafo vazio padrão para poder começar a escrever logo
+    newPage.innerHTML = '<p><br></p>';
+    
+    // Insere no ecrã
+    pagesWrapper.appendChild(newPage);
+    
+    // Faz scroll automático para a nova página e foca nela
+    newPage.scrollIntoView({ behavior: 'smooth' });
+    newPage.focus();
+}
+
+// Exportar todo o conjunto de páginas num único ficheiro formatado
+function saveFile() {
+    const wrapper = document.getElementById('pagesWrapper');
+    const content = wrapper.innerHTML;
+    
     const blob = new Blob([content], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     
-    // Cria um link temporário para forçar o download
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'documento.html'; // Podes mudar a extensão
+    a.download = 'meu_documento_gabriel.html';
     document.body.appendChild(a);
     a.click();
     
-    // Limpa a memória
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
 
-// Função para abrir um ficheiro (.txt ou .html)
+// Abrir e reconstruir as páginas guardadas
 function openFile(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -34,20 +55,26 @@ function openFile(event) {
     const reader = new FileReader();
     reader.onload = function(e) {
         const content = e.target.result;
-        const editor = document.getElementById('editor');
-        
-        // Se for um ficheiro de texto, mete o conteúdo como texto limpo
-        // Se for HTML, renderiza as tags (mantém o estilo)
-        if (file.name.endsWith('.txt')) {
-            editor.innerText = content;
-        } else {
-            editor.innerHTML = content;
-        }
+        const wrapper = document.getElementById('pagesWrapper');
+        wrapper.innerHTML = content;
     };
     
-    // Lê o ficheiro como texto
     reader.readAsText(file);
-    
-    // Limpa o input para poderes carregar o mesmo ficheiro duas vezes se precisares
     event.target.value = '';
 }
+
+// SISTEMA DE TOAST (Mensagem a cada 10 segundos)
+function triggerGabrielToast() {
+    const toast = document.getElementById('toast');
+    
+    // Mostra o toast adicionando a classe CSS
+    toast.classList.add('show');
+    
+    // Esconde o toast após 3.5 segundos de exibição
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3500);
+}
+
+// Executa a função do Toast a cada 10000 milissegundos (10 segundos)
+setInterval(triggerGabrielToast, 10000);
