@@ -39,3 +39,27 @@
                 </div>
             </div>
         </aside>
+
+        <main class="workspace">
+            <div class="toolbar">
+                <div class="tools-left">
+                    <select id="fontPicker" title="Fonte">
+                        <option value="'Outfit', sans-serif">Outfit</option>
+                        <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+                        <option value="'Fraunces', serif">Fraunces</option>
+                        <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                    </select>
+                    <div class="size-control">
+                        <button id="decreaseSize">A-</button>
+                        <span id="currentSize">18px</span>
+                        <button id="increaseSize">A+</button>
+                    </div>
+                </div>
+                <div class="tools-right">
+                    <button class="tool" data-cmd="bold" title="Negrito"><b>B</b></button>
+                    <button class="tool" data-cmd="italic" title="Itálico"><i>I</i></button>
+                    <button class="tool" data-cmd="underline" title="Sublinhar"><u>U</u></button>
+                    <div class="sep"></div>
+                    <button class="tool" data-cmd="insertUnorderedList" title="Lista">• •</button>
+                </div>
+            </div>
