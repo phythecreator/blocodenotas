@@ -1,49 +1,28 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editor de Texto Web</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Ícones para a barra de ferramentas -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Simple Notepad</title>
 </head>
 <body>
-    <div class="toolbar">
-        <div class="toolbar-group">
-            <button class="btn-icon" onclick="formatText('bold')" title="Negrito"><i class="fas fa-bold"></i></button>
-            <button class="btn-icon" onclick="formatText('italic')" title="Itálico"><i class="fas fa-italic"></i></button>
-            <button class="btn-icon" onclick="formatText('underline')" title="Sublinhado"><i class="fas fa-underline"></i></button>
-            <button class="btn-icon" onclick="formatText('strikeThrough')" title="Rasurado"><i class="fas fa-strikethrough"></i></button>
-        </div>
-        
-        <div class="toolbar-group">
-            <button class="btn-icon" onclick="formatText('justifyLeft')" title="Alinhar à Esquerda"><i class="fas fa-align-left"></i></button>
-            <button class="btn-icon" onclick="formatText('justifyCenter')" title="Centrar"><i class="fas fa-align-center"></i></button>
-            <button class="btn-icon" onclick="formatText('justifyRight')" title="Alinhar à Direita"><i class="fas fa-align-right"></i></button>
-            <button class="btn-icon" onclick="formatText('justifyFull')" title="Justificar"><i class="fas fa-align-justify"></i></button>
-        </div>
-        
-        <div class="toolbar-group">
-            <!-- Input escondido para carregar ficheiros -->
-            <input type="file" id="fileInput" accept=".txt,.html" style="display: none;" onchange="openFile(event)">
-            <button class="btn-action" onclick="document.getElementById('fileInput').click()">
-                <i class="fas fa-folder-open"></i> Abrir
-            </button>
-            <button class="btn-action btn-save" onclick="saveFile()">
-                <i class="fas fa-download"></i> Exportar
-            </button>
-        </div>
-    </div>
+    <h1>Simple Notepad</h1>
+    <textarea id="notepad" rows="20" cols="80"></textarea>
+    <br>
+    <button onclick="saveNotepad()">Save Notepad</button>
 
-    <div class="editor-container">
-        <!-- O contenteditable="true" é o que permite escrever na div -->
-        <div class="page" id="editor" contenteditable="true" spellcheck="false">
-            <h1>O Meu Documento</h1>
-            <p>Começa a escrever aqui. Podes selecionar o texto e usar a barra de ferramentas em cima para formatar!</p>
-        </div>
-    </div>
+    <script>
+        function saveNotepad() {
+            const notepadContent = document.getElementById('notepad').value;
+            localStorage.setItem('notepadContent', notepadContent);
+            alert('Notepad saved!');
+        }
 
-    <script src="script.js"></script>
+        // Load saved content when the page loads
+        window.onload = function() {
+            const savedContent = localStorage.getItem('notepadContent');
+            if (savedContent) {
+                document.getElementById('notepad').value = savedContent;
+            }
+        };
+    </script>
 </body>
 </html>
