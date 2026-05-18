@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GabrielDocs - Editor Moderno</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
 
+    <!-- BARRA DE FERRAMENTAS -->
+    <div class="toolbar">
+        <div class="toolbar-group">
+            <button class="btn-icon" onclick="formatText('undo')" title="Desfazer"><i class="fas fa-undo"></i></button>
+            <button class="btn-icon" onclick="formatText('redo')" title="Refazer"><i class="fas fa-redo"></i></button>
+        </div>
+
+        <div class="toolbar-group">
+            <button class="btn-icon" onclick="formatText('bold')" title="Negrito"><i class="fas fa-bold"></i></button>
+            <button class="btn-icon" onclick="formatText('italic')" title="Itálico"><i class="fas fa-italic"></i></button>
+            <button class="btn-icon" onclick="formatText('underline')" title="Sublinhado"><i class="fas fa-underline"></i></button>
+        </div>
+
+        <div class="toolbar-group">
+            <!-- Tamanho da Fonte -->
+            <select onchange="formatParamText('fontSize', this.value)" class="editor-select" title="Tamanho da Fonte">
+                <option value="3">Normal</option>
+                <option value="1">Muito Pequeno</option>
+                <option value="2">Pequeno</option>
+                <option value="4">Médio-Grande</option>
+                <option value="5">Grande</option>
+                <option value="6">Muito Grande</option>
+                <option value="7">Gigante</option>
+            </select>
+            
+            <!-- Cor do Texto -->
+            <div class="color-picker-wrapper" title="Cor do Texto">
+                <i class="fas fa-font"></i>
+                <input type="color" onchange="formatParamText('foreColor', this.value)" value="#202124">
+            </div>
+
+            <!-- Cor de Realce (Fundo) -->
+            <div class="color-picker-wrapper" title="Cor de Realce">
+                <i class="fas fa-highlighter"></i>
+                <input type="color" onchange="formatParamText('hiliteColor', this.value)" value="#ffffff">
+            </div>
+        </div>
+        
+        <div class="toolbar-group">
+            <button class="btn-icon" onclick="formatText('justifyLeft')" title="Alinhar à Esquerda"><i class="fas fa-align-left"></i></button>
+            <button class="btn-icon" onclick="formatText('justifyCenter')" title="Centrar"><i class="fas fa-align-center"></i></button>
+            <button class="btn-icon" onclick="formatText('justifyRight')" title="Alinhar à Direita"><i class="fas fa-align-right"></i></button>
+        </div>
+
+        <div class="toolbar-group">
+            <button class="btn-action btn-add-page" onclick="addNewPage()">
+                <i class="fas fa-plus"></i> Nova Página
+            </button>
+        </div>
+        
+        <div class="toolbar-group action-files">
+            <input type="file" id="fileInput" accept=".html" style="display: none;" onchange="openFile(event)">
+            <button class="btn-action" onclick="document.getElementById('fileInput').click()">
+                <i class="fas fa-folder-open"></i> Abrir
+            </button>
+            <button class="btn-action btn-save" onclick="saveFile()">
+                <i class="fas fa-download"></i> Exportar
+            </button>
+        </div>
+    </div>
+
+    <!-- CONTAINER DAS PÁGINAS -->
+    <div class="editor-container" id="editorContainer">
+        <div class="pages-wrapper" id="pagesWrapper">
+            <!-- Primeira Página Inicial -->
+            <div class="page" contenteditable="true" spellcheck="false">
+                <h1>Documento Novo</h1>
+                <p>Escreve aqui o teu texto...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICAÇÃO TOAST (CRÉDITOS GABRIEL) -->
+    <div id="toast" class="toast">
+        <i class="fas fa-code"></i> Projeto desenvolvido por gabrieltoth
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
